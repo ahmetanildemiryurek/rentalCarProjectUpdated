@@ -1,6 +1,6 @@
 # rentalCarProjectUpdated
 ┣src -> main -> java/com/rentalCarProjectUpdated
- ┣ Week1
+ ┣ Week1 (Rental Car Projemizin ilk paketlerini oluşturduk ve Car Paketini gerekli öğelerle doldurup swagger ui aracılığıyla database'e crud işlemlerini dahil ettik. Projemiz çok katmanlı mimariye uygun olacak şekilde yazılmaya gayret edilmiştir.)
  ┃ ┣ car
  ┃ ┃ ┣ domain
  ┃ ┃ ┃ ┣Car.java
@@ -25,7 +25,7 @@
  ┃ ┃ ┣ OpenApiConfig.java
  ┃
  ┃
- ┣ Week2
+ ┣ Week2 (Rental Car Projemizin Customer paketini oluşturduk ve gerekli öğelerle doldurup Car sınıfı ile mapper öğelerini bütünleştirdik)
  ┃ ┣ customer
  ┃ ┃ ┣ domain
  ┃ ┃ ┃ ┣Customer.java
@@ -41,7 +41,7 @@
  ┃ ┃ ┃ ┣ ICustomerService.java
  ┃
  ┃
- ┣ Week3
+ ┣ Week3 (Rental Car Projemizin Reservation paketini oluşturduk ve gerekli öğelerle doldurup swagger ui aracılığıyla database'e crud işlemlerini dahil edip Customer ve Car Sınıfları İle birleştirdik.)
  ┃ ┣ reservation
  ┃ ┃ ┣ domain
  ┃ ┃ ┃ ┣ Reservation.java
