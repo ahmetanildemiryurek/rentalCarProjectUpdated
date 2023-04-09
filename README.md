@@ -25,7 +25,7 @@
  ┃ ┃ ┣ OpenApiConfig.java
  ┃
  ┃
- ┣ Week2(Rental Car Projemizin Customer paketini oluşturduk ve gerekli öğelerle doldurup Car sınıfı ile mapper öğelerini bütünleştirdik.)
+ ┣ Week2(Rental Car Projemizin Customer paketini oluşturduk ve gerekli öğelerle doldurup Car sınıfı ile mapper öğelerini bütünleştirdik)
  ┃ ┣ customer
  ┃ ┃ ┣ domain
  ┃ ┃ ┃ ┣Customer.java
