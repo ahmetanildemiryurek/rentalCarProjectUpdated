@@ -31,7 +31,7 @@ public class CarController {
     }
     @Schema(description = "Insert Car")
     @PostMapping("/post")
-    public ResponseEntity<CarDto>insertCar(CarDto carDto){
+    public ResponseEntity<CarDto>insertCar(@RequestBody CarDto carDto){
         carDto = this.carService.insertCar(carDto);
         return new ResponseEntity<>(carDto,HttpStatus.OK);
     }
@@ -43,7 +43,7 @@ public class CarController {
 
     @Schema(description = "Update Car")
     @PutMapping("/put")
-    public ResponseEntity<CarDto>updateCar(CarDto carDto){
+    public ResponseEntity<CarDto>updateCar(@RequestBody CarDto carDto){
         carDto = this.carService.updateCar(carDto);
         return new ResponseEntity<>(carDto,HttpStatus.OK);
     }
