@@ -23,6 +23,8 @@ public class CarController {
         this.carService = carService;
     }
 
+    // CRUD İŞLEMLERİ YAPTIĞIMIZ CLASS!!
+
     @Schema(description = "Get Car List")
     @GetMapping("/get")
     public ResponseEntity<List<CarDto>> getCarList(){
