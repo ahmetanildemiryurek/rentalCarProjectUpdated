@@ -1,4 +1,5 @@
 # rentalCarProjectUpdated
+```
 ┣src -> main -> java/com/rentalCarProjectUpdated
  ┣ Week1 (Rental Car Projemizin ilk paketlerini oluşturduk ve Car Paketini gerekli öğelerle doldurup swagger ui aracılığıyla database'e crud işlemlerini dahil ettik. Projemiz çok katmanlı mimariye uygun olacak şekilde yazılmaya gayret edilmiştir.)
  ┃ ┣ car
@@ -60,6 +61,7 @@
  ┃ ┃ ┃ ┃ ┣ ReservationController.java
  ┃ ┃ ┃ ┣ request
  ┃ ┃ ┃ ┣ response
+```
  
  
  
