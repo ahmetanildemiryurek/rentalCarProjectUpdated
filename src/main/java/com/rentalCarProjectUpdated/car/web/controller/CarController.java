@@ -26,25 +26,33 @@ public class CarController {
     // CRUD İŞLEMLERİ YAPTIĞIMIZ CLASS!!
 
     @Schema(description = "Get Car List")
-    @GetMapping("/get")
+    @GetMapping("/getCar")
     public ResponseEntity<List<CarDto>> getCarList(){
         List<CarDto> carDTOList = this.carService.getCars();
         return  new ResponseEntity<>(carDTOList, HttpStatus.OK);
     }
     @Schema(description = "Insert Car")
-    @PostMapping("/post")
+    @PostMapping("/postCar")
     public ResponseEntity<CarDto>insertCar(@RequestBody CarDto carDto){
         carDto = this.carService.insertCar(carDto);
         return new ResponseEntity<>(carDto,HttpStatus.OK);
     }
+
+
+
+
+
+
+
+
     @Schema(description = "Delete Car")
-    @DeleteMapping("/delete")
+    @DeleteMapping("/deleteCar")
     public void removeCar(Long id){
         this.carService.removeCar(id);
     }
 
     @Schema(description = "Update Car")
-    @PutMapping("/put")
+    @PutMapping("/updateCar")
     public ResponseEntity<CarDto>updateCar(@RequestBody CarDto carDto){
         carDto = this.carService.updateCar(carDto);
         return new ResponseEntity<>(carDto,HttpStatus.OK);

@@ -21,4 +21,5 @@ public class CarDto implements Serializable {
     private String vehicleType;
     private Boolean isActive;
     private BigDecimal amount;
+    private String imgURL;
 }

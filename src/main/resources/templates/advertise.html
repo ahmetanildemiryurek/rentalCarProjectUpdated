@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Start your development with Creative Studio landing page.">
+    <meta name="author" content="Devcrud">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <title>İlan Ver</title>
+
+    <!-- Bootstrap + Creative Studio main styles -->
+    <link rel="stylesheet" th:href="@{css/creative-studio.css}">
+
+</head>
+<body data-spy="scroll" data-target=".navbar" data-offset="40" id="home">
+
+<!-- Page Navigation -->
+<nav class="navbar custom-navbar navbar-expand-lg navbar-dark" data-spy="affix" data-offset-top="20">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{index}">
+            <img src="../imgs/logo.png" alt="Demirilik Rental Car">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{loggedInPage}">Ana Sayfa</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#findCar">İlana Koy</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{myCars}">Araçlarım</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{advertise}">İlan Ver</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{archive}">Arşiv</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{myAccount}">Hesabım</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{index}">Çıkış Yap</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- End Of Page Navigation -->
+
+<!-- Page Header -->
+<header class="header">
+    <div class="overlay">
+        <h1 class="title">DEMİRİLİK RENTAL CAR</h1>
+    </div>
+</header>
+<!-- End Of Page Header -->
+<!-- Araç Sorgula -->
+<section id="findCar">
+    <div class="container">
+        <h6 class="section-title mb-5 text-left">Araç Sorgula</h6>
+        <div class="row">
+            <div class="col-sm-8 col-md-12">
+                <div class="card text-center mb-4">
+                    <div class="findCar-body p-4"> <!-- "p-4" classıyla içeriğin padding değerini arttırdık -->
+                        <div class="dpdown1">
+                            <div class="dropdown show1">
+                                <a class="btn btn-secondary dropdown-toggle" role="button" id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Araç Tipi
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink1">
+                                    <a class="dropdown-item">Sedan</a>
+                                    <a class="dropdown-item">Hatchback</a>
+                                    <a class="dropdown-item">SUV</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- <div class="dpdown2"> -->
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Şehir
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <script>
+                                        var iller = ["Adana", "Adıyaman", "Afyonkarahisar", "Ağrı", "Amasya", "Ankara", "Antalya", "Artvin", "Aydın", "Balıkesir", "Bilecik", "Bingöl", "Bitlis", "Bolu", "Burdur", "Bursa", "Çanakkale", "Çankırı", "Çorum", "Denizli", "Diyarbakır", "Edirne", "Elazığ", "Erzincan", "Erzurum", "Eskişehir", "Gaziantep", "Giresun", "Gümüşhane", "Hakkâri", "Hatay", "Isparta", "Mersin", "İstanbul", "İzmir", "Kars", "Kastamonu", "Kayseri", "Kırklareli", "Kırşehir", "Kocaeli", "Konya", "Kütahya", "Malatya", "Manisa", "Kahramanmaraş", "Mardin", "Muğla", "Muş", "Nevşehir", "Niğde", "Ordu", "Rize", "Sakarya", "Samsun", "Siirt", "Sinop", "Sivas", "Tekirdağ", "Tokat", "Trabzon", "Tunceli", "Şanlıurfa", "Uşak", "Van", "Yozgat", "Zonguldak", "Aksaray", "Bayburt", "Karaman", "Kırıkkale", "Batman", "Şırnak", "Bartın", "Ardahan", "Iğdır", "Yalova", "Karabük", "Kilis", "Osmaniye", "Düzce"];
+
+                                        var dropdownMenu = document.querySelector(".dropdown-menu");
+
+                                        for (var i = 0; i < iller.length; i++) {
+                                            var il = iller[i];
+                                            var dropdownItem = document.createElement("a");
+                                            dropdownItem.classList.add("dropdown-item");
+                                            dropdownItem.textContent = il;
+                                            dropdownMenu.appendChild(dropdownItem);
+                                        }
+                                    </script>
+                                </div>
+                            </div>
+
+                            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+                            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+                            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+                            <div class="dropdown-menu pre-scrollable" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item">Seçiniz</a>
+                            </div>
+                        </div>
+
+
+
+                            <div class="dpdown3">
+                            <div class="dropdown show3">
+                                <a class="btn btn-secondary dropdown-toggle" role="button" id="dropdownMenuLink3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Yakıt Tipi
+                                </a>
+
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink3">
+                                    <a class="dropdown-item">Benzin</a>
+                                    <a class="dropdown-item">Dizel</a>
+                                    <a class="dropdown-item">Tüp</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dpdown4">
+                            <div class="dropdown show4">
+                                <a class="btn btn-secondary dropdown-toggle" role="button" id="dropdownMenuLink4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Vites
+                                </a>
+
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink4">
+                                    <a class="dropdown-item">Otomatik</a>
+                                    <a class="dropdown-item">Yarı-Otomatik</a>
+                                    <a class="dropdown-item">Manuel</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dpdown5">
+                            <div class="dropdown show5">
+                                <a class="btn btn-secondary dropdown-toggle" role="button" id="dropdownMenuLink5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Renk
+                                </a>
+
+                                <div class="dropdown-menu pre-scrollable" aria-labelledby="dropdownMenuLink5">
+                                    <a class="dropdown-item">Kırmızı</a>
+                                    <a class="dropdown-item">Siyah</a>
+                                    <a class="dropdown-item">Yeşil</a>
+                                    <a class="dropdown-item">Gri</a>
+                                    <a class="dropdown-item">Mavi</a>
+                                    <a class="dropdown-item">Sarı</a>
+                                    <a class="dropdown-item">Beyaz</a>
+                                    <a class="dropdown-item">Turuncu</a>
+                                    <a class="dropdown-item">Turkuaz</a>
+                                    <a class="dropdown-item">Lila</a>
+                                    <a class="dropdown-item">Pembe</a>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form1">
+                            <form class="form-inline">
+                                <div class="form-group mx-sm-1 mb-2">
+                                    <label for="minFiyat" class="sr-only">Password</label>
+                                    <input type="number" class="form-control" id="minFiyat" placeholder="Min. Fiyat">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="form2">
+                            <form class="form-inline">
+                                <div class="form-group mx-sm-1 mb-2">
+                                    <label for="maxFiyat" class="sr-only">Password</label>
+                                    <input type="number"  class="form-control" id="maxFiyat" placeholder="Max. Fiyat">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="form3">
+                            <form class="form-inline">
+                                <div class="form-group mx-sm-1 mb-2">
+                                    <label for="minFiyat" class="sr-only">Password</label>
+                                    <input type="number" class="form-control" id="minYear" placeholder="Min. Yıl">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="form4">
+                            <form class="form-inline">
+                                <div class="form-group mx-sm-1 mb-2">
+                                    <label for="maxFiyat" class="sr-only">Password</label>
+                                    <input type="number"  class="form-control" id="maxYear" placeholder="Max. Yıl">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Araç Sorgula -->
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <iframe width="100%" height="475" src="https://www.youtube.com/embed/TP4THzsAa3M" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
+<!-- end of modal -->
+<!-- Contact Section -->
+
+
+<section class="has-bg-img py-0">
+    <div class="container">
+        <div class="footer">
+            <div class="footer-lists">
+                <ul class="list">
+                    <li class="list-head">
+                        <h6 class="font-weight-bold">Hakkımızda</h6>
+                    </li>
+                    <li class="list-body">
+                        <a href="#" class="logo">
+                            <img src="../imgs/logo.png" alt="Demirilik Rental Car Logo">
+                            <h6>Demirilik Rental Car</h6>
+                        </a>
+                        <p>2022 Yılı itibariyle ilimiz Elazığ'da faaliyet göstermeye başlamış bulunmaktayız.</p>
+                        <p class="mt-3">
+                            Copyright <script>document.write(new Date().getFullYear())</script> &copy; <a class="d-inline text-primary" href="index.html">Demirilik Rental Car</a>
+                        </p>
+                    </li>
+                </ul>
+                <ul class="list">
+                    <li class="list-head">
+                        <h6 class="font-weight-bold">Faydalı Linkler</h6>
+                    </li>
+                    <li class="list-body">
+                        <div class="row">
+                            <div class="col">
+                                <a href="#about">Hakkımızda</a>
+                            </div>
+                            <div class="col">
+                                <a href="#team">Ekibimiz</a>
+                                <a href="#">SSS</a>
+                                <a href="#">Gizlilik Politikası</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="list">
+                    <li class="list-head">
+                        <h6 class="font-weight-bold">İletişim Bilgileri</h6>
+                    </li>
+                    <li class="list-body">
+                        <p>Bize Ulaşın 24 Saat İçinde Size Dönelim ! </p>
+                        <p><i class="ti-location-pin"></i> Elazığ / Merkez</p>
+                        <p><i class="ti-email"></i> www.demirilik.com</p>
+                        <div class="social-links">
+                            <a href="javascript:void(0)" class="link"><i class="ti-facebook"></i></a>
+                            <a href="javascript:void(0)" class="link"><i class="ti-twitter-alt"></i></a>
+                            <a href="javascript:void(0)" class="link"><i class="ti-google"></i></a>
+                            <a href="javascript:void(0)" class="link"><i class="ti-pinterest-alt"></i></a>
+                            <a href="javascript:void(0)" class="link"><i class="ti-instagram"></i></a>
+                            <a href="javascript:void(0)" class="link"><i class="ti-rss"></i></a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- core  -->
+<script src="assets/vendors/jquery/jquery-3.4.1.js"></script>
+<script src="assets/vendors/bootstrap/bootstrap.bundle.js"></script>
+
+<!-- bootstrap affix -->
+<script src="assets/vendors/bootstrap/bootstrap.affix.js"></script>
+
+<!-- Creative Studio js -->
+<script src="assets/js/creative-studio.js"></script>
+
+</body>
+</html>

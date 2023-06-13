@@ -43,4 +43,7 @@ public class Car {
     @Column(name = "AMOUNT" , nullable = false )
     private BigDecimal amount;
 
+    @Column(name = "IMGURL" , nullable = false , length = 255)
+    private String imgURL;
+
 }
