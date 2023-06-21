@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
+  <meta charset="UTF-8">
+  <title>Giriş Yap</title>
+</head>
+<body>
+<!-- Section: Design Block -->
+<section class="login">
+  <!-- Jumbotron -->
+  <div class="px-4 py-5 px-md-5 text-center text-lg-start" style="background-color: hsl(0, 0%, 96%)">
+    <div class="container">
+      <div class="row gx-lg-5 align-items-center">
+        <div class="col-lg-6 mb-5 mb-lg-0">
+          <h1 style="text-align: center" class="my-5 display-3 fw-bold ls-tight">
+            DEMİRİLİK RENTAL CAR <br/>
+            <span class="text-primary">ŞİRKET GİRİŞİ</span>
+          </h1>
+          <p style="text-align: center; color: hsl(217, 10%, 50.8%)">
+            Mevcut hesabınız var ise giriş yapabilirsiniz. <br/>
+            Hesabınız yoksa Sign Up Butonu ile kayıt olabilirsiniz.
+          </p>
+        </div>
+
+        <div class="col-lg-6 mb-5 mb-lg-0">
+          <form style="text-align: center">
+            <!-- 2 column grid layout with text inputs for the first and last names -->
+            <div>
+              <script>
+                function login2() {
+                  var enteredUsername = document.getElementById("username").value;
+                  var enteredPassword = document.getElementById("password").value;
+
+                  // Kullanıcı adı ve şifre kontrolü
+                  fetch('/register2/getCompanyRegister')
+                          .then(response => response.json())
+                          .then(clients => {
+                            const foundClient = clients.find(clientRegister => clientRegister.username === enteredUsername && clientRegister.password === enteredPassword);
+                            if (foundClient) {
+                              // Doğru ise loggedInPage.html sayfasına yönlendir
+                              window.location.href = "loggedInPage?username=" + enteredUsername;
+                            } else {
+                              // Yanlış ise aynı sayfada kal ve hata mesajını göster
+                              alert("Kullanıcı adı veya şifre hatalı! Tekrar Deneyiniz!");
+                            }
+                          })
+                          .catch(error => {
+                            console.error("Hata oluştu:", error);
+                            alert("Bir hata oluştu. Lütfen tekrar deneyiniz!");
+                          });
+                  window.onload = function() {
+                    // URL'deki parametreleri al
+                    const params = new URLSearchParams(window.location.search);
+                    const username = params.get('username');
+
+                    // Kullanıcı adını sayfada görüntüle
+                    document.getElementById('usernameDisplay').textContent = username;
+                  };
+                }
+              </script>
+              <div>
+                <p style="color: blue">Login</p>
+                <div class="form-outline mb-4">
+                  <input type="text" id="username" class="form-control" placeholder="Username" />
+                  <span id="usernameDisplay"></span>
+                </div>
+                <div class="form-outline mb-4">
+                  <input type="password" id="password" class="form-control" onclick="false" placeholder="Password"/>
+                </div>
+
+                <div class="form-outline mb-4">
+                  <input type="checkbox" onclick="myFunction()"> Şifreyi Göster
+                  <div class="form-check d-flex justify-content-center mb-4">
+                    <label class="form-check-label" for="form2Example33">
+                      Yeni İlanlar Mail'ime Gelsin!
+                      <input class="form-check-input me-2" type="checkbox" value=" "
+                             id="form2Example33" checked/>
+                    </label>
+                  </div>
+                  <!-- Javascript Show Password-->
+                  <script th:inline="javascript">
+                    function myFunction() {
+                      var x = document.getElementById("password");
+                      if (x.type === "password") {
+                        x.type = "text";
+                      } else {
+                        x.type = "password";
+                      }
+                    }
+                  </script>
+                </div>
+
+                <input type="button" value="Sign In" class="btn btn-primary btn-block mb-4" onclick="login2()" />
+              </div>
+
+            </div>
+
+            <!-- Checkbox -->
+
+            <!-- Submit button -->
+            <a th:href="@{/companyRegister}">
+              <input type="button" class="btn btn-primary btn-block mb-4" value="Sign Up"/>
+            </a>
+            <a th:href="@{/forgetPassword}">
+              <input type="button" class="btn btn-primary btn-block mb-4"
+                     value="I Forgot My Password"/>
+            </a>
+
+            <!-- Register buttons -->
+            <div class="text-center">
+              <p>Bizi Takip Edebilirsiniz</p>
+              <button type="button" class="btn btn-link btn-floating mx-1">
+                <i class="fab fa-facebook"></i>
+              </button>
+
+              <button type="button" class="btn btn-link btn-floating mx-1">
+                <i class="fab fa-linkedin-in"></i>
+              </button>
+
+              <button type="button" class="btn btn-link btn-floating mx-1">
+                <i class="fab fa-twitter"></i>
+              </button>
+
+              <button type="button" class="btn btn-link btn-floating mx-1">
+                <i class="fab fa-instagram"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+  <!-- Jumbotron -->
+</section>
+<!-- Section: Design Block -->
+</body>
+</html>
