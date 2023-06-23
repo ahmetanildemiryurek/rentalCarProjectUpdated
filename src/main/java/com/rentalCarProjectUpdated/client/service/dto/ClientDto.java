@@ -1,4 +1,4 @@
-package com.rentalCarProjectUpdated.user.service.dto;
+package com.rentalCarProjectUpdated.client.service.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,7 +7,7 @@ import lombok.Setter;
 @NoArgsConstructor(force = true)
 @Getter
 @Setter
-public class UserAdminDto {
+public class ClientDto {
     private Long id;
 
     private String username;

@@ -1,9 +1,6 @@
-package com.rentalCarProjectUpdated.user.domain;
+package com.rentalCarProjectUpdated.client.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,14 +9,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class UserAdmin {
+public class Client {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "USERNAME" , nullable = false , length = 50)
     private String username;
 
+    @Column(name = "PASSWORD" , nullable = false , length = 100)
     private String password;
 
 

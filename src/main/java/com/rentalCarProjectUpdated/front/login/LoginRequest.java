@@ -18,8 +18,8 @@ public class LoginRequest {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userId;
 
-    private String email = "anil";
+    private String email ;
 
-    private String password = "1234";
+    private String password ;
 
 }

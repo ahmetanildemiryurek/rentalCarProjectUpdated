@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Start your development with Creative Studio landing page.">
+  <meta name="author" content="Devcrud">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+
+  <!-- Bootstrap JS -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+  <title>İlan Ver</title>
+
+  <!-- Bootstrap + Creative Studio main styles -->
+  <link rel="stylesheet" th:href="@{css/creative-studio.css}">
+
+</head>
+<body data-spy="scroll" data-target=".navbar" data-offset="40" id="home">
+
+<!-- Page Navigation -->
+<nav class="navbar custom-navbar navbar-expand-lg navbar-dark" data-spy="affix" data-offset-top="20">
+  <div class="container">
+    <a class="navbar-brand" th:href="@{index}">
+      <img src="../imgs/logo.png" alt="Demirilik Rental Car">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{loggedInPage}">Ana Sayfa</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{myCars}">Araçlarım</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{archive}">Arşivim</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{myAccount}">Hesabım</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{index}">Çıkış Yap</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- End Of Page Navigation -->
+
+<!-- Page Header -->
+<header class="header">
+  <div class="overlay">
+    <h1 class="title">DEMİRİLİK RENTAL CAR</h1>
+  </div>
+</header>
+<!-- End Of Page Header -->
+<!-- Araç Sorgula -->
+<section id="findCar">
+  <div class="container">
+    <h6 class="section-title mb-5 text-left">Araç İlan Ver</h6>
+    <div class="row">
+      <div class="col-sm-8 col-md-12">
+        <div class="card text-center mb-4">
+          <form id="carQueryForm">
+            <label for="brand">Marka:</label>
+            <select id="brand">
+              <option value="all">Tümü</option>
+              <option value="civic">Honda</option>
+              <option value="renault">Renault</option>
+              <option value="opel">Opel</option>
+              <option value="tofaş">Tofaş</option>
+              <option value="dodge">Dodge</option>
+              <option value="bmw">BMW</option>
+              <option value="toyota">Toyota</option>
+              <option value="mercedes">Mercedes</option>
+              <!-- Diğer markaları buraya ekleyebilirsiniz -->
+            </select>
+
+            <style>
+              .car-table {
+                width: 100%;
+                border-collapse: collapse;
+              }
+
+              .car-table th,
+              .car-table td {
+                padding: 10px;
+                text-align: center;
+                border: 1px solid #ddd;
+              }
+
+              .car-table th {
+                background-color: #f2f2f2;
+              }
+
+              .car-table img {
+                width: 80px;
+                height: 60px;
+                object-fit: cover;
+                border-radius: 5px;
+              }
+            </style>
+            <button class="btn-success" type="submit" value="Submit">Araçları Bul</button>
+          </form>
+
+          <table class="car-table">
+          <thead>
+          <tr>
+            <th>Car Owner</th>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>Fuel Type</th>
+            <th>Segment</th>
+            <th>Capacity</th>
+            <th>Vehicle Type</th>
+            <th>Is Active</th>
+            <th>Amount</th>
+            <th>Image</th>
+          </tr>
+          </thead>
+          <tbody id="carTableBody"></tbody>
+        </table>
+
+          <script>
+            document.getElementById("carQueryForm").addEventListener("submit", function(event) {
+              event.preventDefault();
+
+              const selectedBrand = document.getElementById("brand").value;
+
+              fetch("/car/getCar")
+                      .then(response => response.json())
+                      .then(data => {
+                        let filteredCars = data;
+
+                        if (selectedBrand !== "all") {
+                          filteredCars = data.filter(car => car.brand === selectedBrand);
+                        }
+
+                        const carTableBody = document.getElementById("carTableBody");
+                        carTableBody.innerHTML = "";
+
+                        if (filteredCars.length > 0) {
+                          filteredCars.forEach(car => {
+                            const row = document.createElement("tr");
+                            row.innerHTML = `
+              <td>${car.carOwner}</td>
+              <td>${car.brand}</td>
+              <td>${car.model}</td>
+              <td>${car.fuelType}</td>
+              <td>${car.segment}</td>
+              <td>${car.capacity}</td>
+              <td>${car.vehicleType}</td>
+              <td>${car.isActive}</td>
+              <td>${car.amount}</td>
+              <td><img src="${car.imgURL}" alt="Car Image"></td>
+            `;
+                            carTableBody.appendChild(row);
+                          });
+                        } else {
+                          showAttentionMessage("Aradığınız markaya uygun araç bulunamadı.");
+                        }
+                      })
+                      .catch(error => {
+                        console.error("Araç sorgulama hatası:", error);
+                      });
+            });
+          </script>
+
+          <script>
+            document.getElementById("carQueryForm").addEventListener("submit", function(event) {
+              event.preventDefault();
+
+              const selectedBrand = document.getElementById("brand").value;
+
+              if (selectedBrand === "all") {
+                fetch("/car/getCar")
+                        .then(response => response.json())
+                        .then(data => {
+                          const carTableBody = document.getElementById("carTableBody");
+                          carTableBody.innerHTML = "";
+
+                          if (data.length > 0) {
+                            data.forEach(car => {
+                              const row = document.createElement("tr");
+                              row.innerHTML = `
+                <td>${car.carOwner}</td>
+                <td>${car.brand}</td>
+                <td>${car.model}</td>
+                <td>${car.fuelType}</td>
+                <td>${car.segment}</td>
+                <td>${car.capacity}</td>
+                <td>${car.vehicleType}</td>
+                <td>${car.isActive}</td>
+                <td>${car.amount}</td>
+                <td><img src="${car.imgURL}" alt="Car Image"></td>
+              `;
+                              carTableBody.appendChild(row);
+                            });
+                          } else {
+                            showAttentionMessage("Veritabanında araç bulunamadı.");
+                          }
+                        })
+                        .catch(error => {
+                          console.error("Araç sorgulama hatası:", error);
+                        });
+              } else {
+                // Diğer markalara özgü filtreleme kodu
+              }
+            });
+          </script>
+
+
+
+
+        </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+
+
+<section class="has-bg-img py-0">
+  <div class="container">
+    <div class="footer">
+      <div class="footer-lists">
+        <ul class="list">
+          <li class="list-head">
+            <h6 class="font-weight-bold">Hakkımızda</h6>
+          </li>
+          <li class="list-body">
+            <a href="#" class="logo">
+              <img src="../imgs/logo.png" alt="Demirilik Rental Car Logo">
+              <h6>Demirilik Rental Car</h6>
+            </a>
+            <p>2022 Yılı itibariyle ilimiz Elazığ'da faaliyet göstermeye başlamış bulunmaktayız.</p>
+            <p class="mt-3">
+              Copyright <script>document.write(new Date().getFullYear())</script> &copy; <a class="d-inline text-primary" href="index.html">Demirilik Rental Car</a>
+            </p>
+          </li>
+        </ul>
+        <ul class="list">
+          <li class="list-head">
+            <h6 class="font-weight-bold">Faydalı Linkler</h6>
+          </li>
+          <li class="list-body">
+            <div class="row">
+              <div class="col">
+                <a href="#about">Hakkımızda</a>
+              </div>
+              <div class="col">
+                <a href="#team">Ekibimiz</a>
+                <a href="#">SSS</a>
+                <a href="#">Gizlilik Politikası</a>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <ul class="list">
+          <li class="list-head">
+            <h6 class="font-weight-bold">İletişim Bilgileri</h6>
+          </li>
+          <li class="list-body">
+            <p>Bize Ulaşın 24 Saat İçinde Size Dönelim ! </p>
+            <p><i class="ti-location-pin"></i> Elazığ / Merkez</p>
+            <p><i class="ti-email"></i> www.demirilik.com</p>
+            <div class="social-links">
+              <a href="javascript:void(0)" class="link"><i class="ti-facebook"></i></a>
+              <a href="javascript:void(0)" class="link"><i class="ti-twitter-alt"></i></a>
+              <a href="javascript:void(0)" class="link"><i class="ti-google"></i></a>
+              <a href="javascript:void(0)" class="link"><i class="ti-pinterest-alt"></i></a>
+              <a href="javascript:void(0)" class="link"><i class="ti-instagram"></i></a>
+              <a href="javascript:void(0)" class="link"><i class="ti-rss"></i></a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- core  -->
+<script src="assets/vendors/jquery/jquery-3.4.1.js"></script>
+<script src="assets/vendors/bootstrap/bootstrap.bundle.js"></script>
+
+<!-- bootstrap affix -->
+<script src="assets/vendors/bootstrap/bootstrap.affix.js"></script>
+
+<!-- Creative Studio js -->
+<script src="assets/js/creative-studio.js"></script>
+
+</body>
+</html>

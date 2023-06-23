@@ -18,19 +18,19 @@
 <nav class="navbar custom-navbar navbar-expand-lg navbar-dark" data-spy="affix" data-offset-top="20">
     <div class="container">
         <a class="navbar-brand" href="index">
-            <img th:src="@{/imgs/logo.png}" alt="Demirilik Rental Car">
+            <img th:src="@{/imgs/logo.png}"alt="Demirilik Rental Car">
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button"data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse"id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{cars}">Ana Sayfa</a>
+                    <a class="nav-link"th:href="@{cars}">Ana Sayfa</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#findCar">Araç Sorgula</a>
+                    <a class="nav-link"href="#findCar">Araç Sorgula</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{myCars}">Araçlarım</a>
@@ -62,55 +62,21 @@
 <!-- End Of Page Header -->
 <!-- Araçlarım -->
 <section id="findCar">
-        <h6 class="section-title mb-5 text-center">Araçlarım</h6>
+    <h6 class="section-title mb-5 text-center">Araçlarım</h6>
     <div class="container" id="carWrapper">
 
         <script>
             listele();
             function sil(evt) {
-
-
-                            fetch('/car/deleteCar?id=' + evt.currentTarget.param, {
-                                method: 'DELETE'
-                            })
-                                .then(response => {
-                                    if (response.ok) {
-                                        listele();
-                                        $('.alert').alert();
-                                    } else {
-                                        // Silme başarısız olduğunda yapılacak işlemler
-                                    }
-                                })
-                                .catch(error => {
-                                    // Hata durumunda yapılacak işlemler
-                                });
-
-
-            }
-
-            function guncelle(id) {
-                // Güncellenecek verileri burada toplayın veya işleyin
-
-                // Örnek olarak, güncellenecek verileri bir nesne olarak oluşturup gönderiyoruz
-                const updateData = {
-                    id: id,
-                    // Diğer güncellenecek verileri buraya ekleyin
-                };
-
-                fetch('/car/updateCar', {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(updateData)
+                fetch('/car/deleteCar?id=' + evt.currentTarget.param, {
+                    method: 'DELETE'
                 })
                     .then(response => {
                         if (response.ok) {
-                            // Güncelleme başarılı olduğunda yapılacak işlemler
                             listele();
                             $('.alert').alert();
                         } else {
-                            // Güncelleme başarısız olduğunda yapılacak işlemler
+                            // Silme başarısız olduğunda yapılacak işlemler
                         }
                     })
                     .catch(error => {
@@ -257,8 +223,6 @@
                 const  updateBtn = document.createElement("button");
                 updateBtn.classList.add("btn", "btn-success","btn-sm");
                 updateBtn.type="button";
-                updateBtn.addEventListener("click", guncelle, false)
-                updateBtn.param=item.id;
                 updateBtn.innerText="Güncelle";
 
                 carActionButtonItem.appendChild(updateBtn);
@@ -296,7 +260,7 @@
 
 
 
-        </div>
+    </div>
 
 
 </section>

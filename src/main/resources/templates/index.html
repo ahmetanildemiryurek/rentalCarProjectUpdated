@@ -29,30 +29,41 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
+
                 <li class="nav-item">
                     <a class="nav-link" href="#home">Ana Sayfa</a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="#team">Ekibimiz</a>
                 </li>
+
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{cars}">Araçlar</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#contact">İletişim</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#about">Hakkımızda</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{loginCustomer}">Müşteri Girişi</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{login}">Şirket Girişi</a>
+                    <a class="nav-link" href="#findCar">Araçlar</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{register}">Kayıt Ol</a>
+                    <a class="nav-link" href="#contact">İletişim</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">Hakkımızda</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{login}">Giriş Yap (Müşteri)</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{companyLogin}">Giriş Yap (Şirket)</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{register}">Kayıt Ol (Müşteri)</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{companyRegister}">Kayıt Ol (Şirket)</a>
                 </li>
             </ul>
         </div>
@@ -85,212 +96,206 @@
         <p>Çok Yakında !</p>
     </div>
 </div>
-
+<!-- End of Box -->
 <section id="findCar">
+    <h6 class="section-title mb-5 text-center">Uygun Araçlar</h6>
+    <div class="container" id="carWrapper">
 
-    <div class="container">
-        <h1 text align="center">Araç Kiralama</h1>
+        <script>
+            listele();
+            function sil(evt) {
+                fetch('/car/deleteCar?id=' + evt.currentTarget.param, {
+                    method: 'DELETE'
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            listele();
+                            $('.alert').alert();
+                        } else {
+                            // Silme başarısız olduğunda yapılacak işlemler
+                        }
+                    })
+                    .catch(error => {
+                        // Hata durumunda yapılacak işlemler
+                    });
+            }
 
-        <form>
-            <div class="form-group">
-                <label for="brandSelect">Marka:</label>
-                <select class="form-control" id="brandSelect">
-                    <option value="">Tüm Markalar</option>
-                    <option value="BMW">BMW</option>
-                    <option value="Mercedes-Benz">Mercedes-Benz</option>
-                    <option value="Audi">Audi</option>
-                    <option value="Volkswagen">Volkswagen</option>
-                    <option value="Ford">Ford</option>
-                </select>
-            </div>
+            function listele(){
 
-            <div class="form-group">
-                <label for="modelSelect">Model:</label>
-                <select class="form-control" id="modelSelect">
-                    <option value="">Tüm Modeller</option>
-                    <option value="Sedan">Sedan</option>
-                    <option value="Hatchback">Hatchback</option>
-                    <option value="SUV">SUV</option>
-                    <option value="Cabrio">Cabrio</option>
-                </select>
-            </div>
+                const  carWrapper = document.getElementById("carWrapper");
+                carWrapper.innerHTML = "";
+                fetch('/car/getCar', {
+                    method: 'GET'
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.length > 0) {
+                            data.forEach(addCarItem);
 
-            <div class="form-group">
-                <label for="yearSelect">Yıl:</label>
-                <select class="form-control" id="yearSelect">
-                    <option value="">Tüm Yıllar</option>
-                    <option value="2023">2023</option>
-                    <option value="2022">2022</option>
-                    <option value="2021">2021</option>
-                    <option value="2020">2020</option>
-                </select>
-            </div>
+                        }
+                    })
+                    .catch(error => {
+                        // Hata durumunda yapılacak işlemler
+                    });
 
-            <div class="form-group">
-                <label for="colorSelect">Renk:</label>
-                <select class="form-control" id="colorSelect">
-                    <option value="">Tüm Renkler</option>
-                    <option value="Beyaz">Beyaz</option>
-                    <option value="Siyah">Siyah</option>
-                    <option value="Gri">Gri</option>
-                    <option value="Kırmızı">Kırmızı</option>
-                </select>
-            </div>
+            }
 
-            <div class="form-group">
-                <label for="addressSelect">Adres:</label>
-                <select class="form-control" id="addressSelect">
-                    <option value="">Tüm Adresler</option>
-                    <option value="İstanbul">İstanbul</option>
-                    <option value="Ankara">Ankara</option>
-                    <option value="İzmir">İzmir</option>
-                    <option value="Antalya">Antalya</option>
-                </select>
-            </div>
 
-            <div class="form-group">
-                <label for="priceSelect">Fiyat Aralığı:</label>
-                <select class="form-control" id="priceSelect">
-                    <option value="">Tüm Fiyatlar</option>
-                    <option value="0-100">0 - 100</option>
-                    <option value="100-200">100 - 200</option>
-                    <option value="200-300">200 - 300</option>
-                    <option value="300-400">300 - 400</option>
-                </select>
-            </div>
+            function addCarItem(item) {
+                const carWrapper = document.getElementById("carWrapper");
 
-            <div class="form-group">
-                <label for="transmissionSelect">Vites Türü:</label>
-                <select class="form-control" id="transmissionSelect">
-                    <option value="">Tüm Vites Türleri</option>
-                    <option value="Manuel">Manuel</option>
-                    <option value="Otomatik">Otomatik</option>
-                </select>
-            </div>
+                const carBox = document.createElement("div");
+                carBox.classList.add("row", "car__list-item");
 
-            <div class="form-group">
-                <label for="fuelSelect">Yakıt Türü:</label>
-                <select class="form-control" id="fuelSelect">
-                    <option value="">Tüm Yakıt Türleri</option>
-                    <option value="Benzin">Benzin</option>
-                    <option value="Dizel">Dizel</option>
-                    <option value="Elektrik">Elektrik</option>
-                </select>
-            </div>
-            <div texx align="center">
-            <button type="button" class="btn btn-primary" id="filterButton" >Filtrele</button>
-            </div>
-        </form>
+                const carBoxSm = document.createElement("div");
+                carBoxSm.classList.add("col-sm-8", "col-md-12", "car__list-item-inner");
 
-        <h2 text align="center">Araçlar:</h2>
-        <div id="selectedCars"></div>
-    </div>
+                const carImgBox = document.createElement("div");
+                carImgBox.classList.add("image_wrap");
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+                const aracImg = document.createElement("img");
+                aracImg.alt = "Arac";
+                aracImg.src = item.imgURL;
 
-    <script>
-        $(document).ready(function () {
-            var cars = [
-                {
-                    brand: "BMW",
-                    model: "Sedan",
-                    year: 2022,
-                    color: "Beyaz",
-                    address: "İstanbul",
-                    price: 250,
-                    transmission: "Otomatik",
-                    fuel: "Benzin"
-                },
-                {
-                    brand: "Mercedes-Benz",
-                    model: "Hatchback",
-                    year: 2021,
-                    color: "Siyah",
-                    address: "Ankara",
-                    price: 180,
-                    transmission: "Manuel",
-                    fuel: "Dizel"
-                },
-                {
-                    brand: "Audi",
-                    model: "SUV",
-                    year: 2023,
-                    color: "Kırmızı",
-                    address: "İzmir",
-                    price: 320,
-                    transmission: "Otomatik",
-                    fuel: "Benzin"
-                },
-                {
-                    brand: "Volkswagen",
-                    model: "Sedan",
-                    year: 2020,
-                    color: "Gri",
-                    address: "Antalya",
-                    price: 150,
-                    transmission: "Manuel",
-                    fuel: "Benzin"
-                },
-                {
-                    brand: "Ford",
-                    model: "Cabrio",
-                    year: 2022,
-                    color: "Beyaz",
-                    address: "İstanbul",
-                    price: 280,
-                    transmission: "Otomatik",
-                    fuel: "Benzin"
-                }
-            ];
+                carImgBox.appendChild(aracImg);
+                carBoxSm.appendChild(carImgBox);
 
-            function filterCars() {
-                var selectedBrand = $('#brandSelect').val();
-                var selectedModel = $('#modelSelect').val();
-                var selectedYear = $('#yearSelect').val();
-                var selectedColor = $('#colorSelect').val();
-                var selectedAddress = $('#addressSelect').val();
-                var selectedPrice = $('#priceSelect').val();
-                var selectedTransmission = $('#transmissionSelect').val();
-                var selectedFuel = $('#fuelSelect').val();
+                const carDetail = document.createElement("div");
+                carDetail.classList.add("text_wrap");
 
-                var filteredCars = cars.filter(function (car) {
-                    return (selectedBrand === "" || car.brand === selectedBrand)
-                        && (selectedModel === "" || car.model === selectedModel)
-                        && (selectedYear === "" || car.year.toString() === selectedYear)
-                        && (selectedColor === "" || car.color === selectedColor)
-                        && (selectedAddress === "" || car.address === selectedAddress)
-                        && (selectedPrice === "" || (car.price >= parseInt(selectedPrice.split("-")[0])) && (car.price <= parseInt(selectedPrice.split("-")[1])))
-                        && (selectedTransmission === "" || car.transmission === selectedTransmission)
-                        && (selectedFuel === "" || car.fuel === selectedFuel);
+                const carTitle = document.createElement("h5");
+                carTitle.classList.add("title");
+                carTitle.innerText = item.carOwner + " " + item.brand + " " + item.model;
+                carDetail.appendChild(carTitle);
+
+                const carSubTitle = document.createElement("h6");
+                carSubTitle.classList.add("text");
+                carSubTitle.innerText = "Ekonomik";
+                carDetail.appendChild(carSubTitle);
+
+                const carProperties = document.createElement("div");
+                carProperties.classList.add("properties");
+
+                const carPropertiesItemGear = document.createElement("div");
+                carPropertiesItemGear.classList.add("properties_item");
+
+                const carPropertiesItemGearIcon = document.createElement("i");
+                carPropertiesItemGearIcon.classList.add("fa", "fa-gear");
+                carPropertiesItemGear.appendChild(carPropertiesItemGearIcon);
+
+                const carPropertiesItemGearSpan = document.createElement("span");
+                carPropertiesItemGearSpan.innerText = item.fuelType;
+                carPropertiesItemGear.appendChild(carPropertiesItemGearSpan);
+
+                carProperties.appendChild(carPropertiesItemGear);
+
+                const carPropertiesItemCapacity = document.createElement("div");
+                carPropertiesItemCapacity.classList.add("properties_item");
+
+                const carPropertiesItemCapacityIcon = document.createElement("i");
+                carPropertiesItemCapacityIcon.classList.add("fa", "fa-capacity");
+                carPropertiesItemCapacity.appendChild(carPropertiesItemCapacityIcon);
+
+                const carPropertiesItemCapacitySpan = document.createElement("span");
+                carPropertiesItemCapacitySpan.innerText = item.capacity;
+                carPropertiesItemCapacity.appendChild(carPropertiesItemCapacitySpan);
+
+                carProperties.appendChild(carPropertiesItemCapacity);
+
+                carDetail.appendChild(carProperties);
+
+                const carPrice = document.createElement("div");
+                carPrice.classList.add("price_wrap");
+
+                const carPriceRow = document.createElement("div");
+                carPriceRow.classList.add("price_row");
+
+                const carPriceItem = document.createElement("div");
+                carPriceItem.classList.add("price_row-item");
+
+                const carPriceItemDetail = document.createElement("div");
+                carPriceItemDetail.classList.add("price");
+
+                const carPriceCurrency = document.createElement("em");
+                carPriceItemDetail.classList.add("price_type");
+                carPriceItemDetail.innerText = "₺";
+                carPriceItemDetail.appendChild(carPriceCurrency);
+
+                const carPriceSpan = document.createElement("span");
+                carPriceSpan.innerText = item.amount;
+
+                const carPriceI = document.createElement("i");
+                carPriceI.innerText = ".00";
+                carPriceSpan.appendChild(carPriceI);
+
+                carPriceItemDetail.appendChild(carPriceSpan);
+                carPriceItem.appendChild(carPriceItemDetail);
+
+                const carPriceText = document.createElement("div");
+                carPriceText.classList.add("price_text");
+                carPriceText.innerText = "Günde";
+                carPriceItem.appendChild(carPriceText);
+
+                carPriceRow.appendChild(carPriceItem);
+
+                const carButtonRow = document.createElement("div");
+                carButtonRow.classList.add("price_row");
+
+                const carActionButtonItem = document.createElement("div");
+                carActionButtonItem.classList.add("price_row-item");
+
+                /* const updateBtn = document.createElement("button");
+                 updateBtn.classList.add("btn", "btn-success", "btn-sm");
+                 updateBtn.type = "button";
+                 updateBtn.innerText = "Güncelle";
+                 updateBtn.addEventListener("click", function () {
+                     alert("Lütfen giriş yapınız");
+                 });
+
+                 carActionButtonItem.appendChild(updateBtn);
+ */
+                const deleteBtn = document.createElement("button");
+                deleteBtn.classList.add("btn", "btn-danger", "btn-sm");
+                deleteBtn.type = "button";
+                //deleteBtn.addEventListener("click", sil, false);
+                deleteBtn.param = item.id;
+                deleteBtn.innerText = "Kirala";
+                deleteBtn.addEventListener("click", function () {
+                    alert("Lütfen giriş yapınız");
                 });
 
-                displayCars(filteredCars);
+                carActionButtonItem.appendChild(deleteBtn);
+
+                const archiveBtn = document.createElement("button");
+                archiveBtn.classList.add("btn", "btn-warning", "btn-sm");
+                archiveBtn.type = "button";
+                archiveBtn.innerText = "Arşivle";
+                archiveBtn.addEventListener("click", function () {
+                    alert("Lütfen giriş yapınız");
+                });
+
+                carActionButtonItem.appendChild(archiveBtn);
+                carButtonRow.appendChild(carActionButtonItem);
+
+                carPrice.appendChild(carPriceRow);
+                carPrice.appendChild(carButtonRow);
+
+                carBoxSm.appendChild(carDetail);
+                carBoxSm.appendChild(carPrice);
+
+                carBox.appendChild(carBoxSm);
+
+                carWrapper.appendChild(carBox);
             }
+        </script>
 
-            function displayCars(filteredCars) {
-                var selectedCarsContainer = $('#selectedCars');
-                selectedCarsContainer.empty();
 
-                if (filteredCars.length > 0) {
-                    var ul = $('<ul>');
-                    filteredCars.forEach(function (car) {
-                        var li = $('<li>').text(car.brand + ' - ' + car.model);
-                        ul.append(li);
-                    });
-                    selectedCarsContainer.append(ul);
-                } else {
-                    selectedCarsContainer.text('Aradığınız kriterlere uygun araç bulunamadı.');
-                }
-            }
 
-            $('#filterButton').click(filterCars);
-        });
-    </script>
+
+    </div>
+
 
 </section>
-<!-- End of Box -->
 <!-- About Section -->
 <section id="about">
     <div class="container">

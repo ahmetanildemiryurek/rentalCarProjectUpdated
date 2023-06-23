@@ -38,9 +38,6 @@
                     <a class="nav-link" th:href="@{loggedInPage}">Ana Sayfa</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#findCar">İlana Koy</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" th:href="@{myCars}">Araçlarım</a>
                 </li>
                 <li class="nav-item">
@@ -71,155 +68,164 @@
 <!-- Araç Sorgula -->
 <section id="findCar">
     <div class="container">
-        <h6 class="section-title mb-5 text-left">Araç Sorgula</h6>
+        <h6 class="section-title mb-5 text-left">Araç İlan Ver</h6>
         <div class="row">
             <div class="col-sm-8 col-md-12">
                 <div class="card text-center mb-4">
-                    <div class="findCar-body p-4"> <!-- "p-4" classıyla içeriğin padding değerini arttırdık -->
-                        <div class="dpdown1">
-                            <div class="dropdown show1">
-                                <a class="btn btn-secondary dropdown-toggle" role="button" id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Araç Tipi
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink1">
-                                    <a class="dropdown-item">Sedan</a>
-                                    <a class="dropdown-item">Hatchback</a>
-                                    <a class="dropdown-item">SUV</a>
-                                </div>
+                    <style>
+                        .form-container {
+                            max-width: 400px;
+                            margin: 0 auto;
+                            padding: 20px;
+                            border: 1px solid #ccc;
+                            border-radius: 5px;
+                            background-color: #f8f8f8;
+                        }
+
+                        .form-container h2 {
+                            text-align: center;
+                            margin-bottom: 20px;
+                        }
+
+                        .form-container label {
+                            display: block;
+                            margin-bottom: 10px;
+                            font-weight: bold;
+                        }
+
+                        .form-container input[type="text"],
+                        .form-container input[type="number"] {
+                            width: 100%;
+                            padding: 10px;
+                            margin-bottom: 20px;
+                            border: 1px solid #ccc;
+                            border-radius: 4px;
+                            box-sizing: border-box;
+                        }
+
+                        .form-container input[type="checkbox"] {
+                            margin-top: 10px;
+                        }
+
+                        .form-container button[type="submit"] {
+                            width: 100%;
+                            padding: 10px;
+                            border: none;
+                            border-radius: 4px;
+                            background-color: #4caf50;
+                            color: white;
+                            font-weight: bold;
+                            cursor: pointer;
+                        }
+                    </style>
+
+                    <div class="form-container">
+                        <h2>Araç İlanı Ver</h2>
+                        <form id="carForm">
+                            <div>
+                                <label for="carOwner">Araba Sahibi:</label>
+                                <input type="text" id="carOwner" name="carOwner" required>
                             </div>
-                        </div>
-
-                        <!-- <div class="dpdown2"> -->
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Şehir
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <script>
-                                        var iller = ["Adana", "Adıyaman", "Afyonkarahisar", "Ağrı", "Amasya", "Ankara", "Antalya", "Artvin", "Aydın", "Balıkesir", "Bilecik", "Bingöl", "Bitlis", "Bolu", "Burdur", "Bursa", "Çanakkale", "Çankırı", "Çorum", "Denizli", "Diyarbakır", "Edirne", "Elazığ", "Erzincan", "Erzurum", "Eskişehir", "Gaziantep", "Giresun", "Gümüşhane", "Hakkâri", "Hatay", "Isparta", "Mersin", "İstanbul", "İzmir", "Kars", "Kastamonu", "Kayseri", "Kırklareli", "Kırşehir", "Kocaeli", "Konya", "Kütahya", "Malatya", "Manisa", "Kahramanmaraş", "Mardin", "Muğla", "Muş", "Nevşehir", "Niğde", "Ordu", "Rize", "Sakarya", "Samsun", "Siirt", "Sinop", "Sivas", "Tekirdağ", "Tokat", "Trabzon", "Tunceli", "Şanlıurfa", "Uşak", "Van", "Yozgat", "Zonguldak", "Aksaray", "Bayburt", "Karaman", "Kırıkkale", "Batman", "Şırnak", "Bartın", "Ardahan", "Iğdır", "Yalova", "Karabük", "Kilis", "Osmaniye", "Düzce"];
-
-                                        var dropdownMenu = document.querySelector(".dropdown-menu");
-
-                                        for (var i = 0; i < iller.length; i++) {
-                                            var il = iller[i];
-                                            var dropdownItem = document.createElement("a");
-                                            dropdownItem.classList.add("dropdown-item");
-                                            dropdownItem.textContent = il;
-                                            dropdownMenu.appendChild(dropdownItem);
-                                        }
-                                    </script>
-                                </div>
+                            <div>
+                                <label for="brand">Marka:</label>
+                                <input type="text" id="brand" name="brand" required>
                             </div>
-
-                            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-                            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-                            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-                            <div class="dropdown-menu pre-scrollable" aria-labelledby="dropdownMenuLink">
-                                <a class="dropdown-item">Seçiniz</a>
+                            <div>
+                                <label for="model">Model:</label>
+                                <input type="text" id="model" name="model" required>
                             </div>
-                        </div>
-
-
-
-                            <div class="dpdown3">
-                            <div class="dropdown show3">
-                                <a class="btn btn-secondary dropdown-toggle" role="button" id="dropdownMenuLink3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Yakıt Tipi
-                                </a>
-
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink3">
-                                    <a class="dropdown-item">Benzin</a>
-                                    <a class="dropdown-item">Dizel</a>
-                                    <a class="dropdown-item">Tüp</a>
-                                </div>
+                            <div>
+                                <label for="fuelType">Yakıt Türü:</label>
+                                <input type="text" id="fuelType" name="fuelType" required>
                             </div>
-                        </div>
-                        <div class="dpdown4">
-                            <div class="dropdown show4">
-                                <a class="btn btn-secondary dropdown-toggle" role="button" id="dropdownMenuLink4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Vites
-                                </a>
-
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink4">
-                                    <a class="dropdown-item">Otomatik</a>
-                                    <a class="dropdown-item">Yarı-Otomatik</a>
-                                    <a class="dropdown-item">Manuel</a>
-                                </div>
+                            <div>
+                                <label for="segment">Segment:</label>
+                                <input type="text" id="segment" name="segment" required>
                             </div>
-                        </div>
-
-                        <div class="dpdown5">
-                            <div class="dropdown show5">
-                                <a class="btn btn-secondary dropdown-toggle" role="button" id="dropdownMenuLink5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Renk
-                                </a>
-
-                                <div class="dropdown-menu pre-scrollable" aria-labelledby="dropdownMenuLink5">
-                                    <a class="dropdown-item">Kırmızı</a>
-                                    <a class="dropdown-item">Siyah</a>
-                                    <a class="dropdown-item">Yeşil</a>
-                                    <a class="dropdown-item">Gri</a>
-                                    <a class="dropdown-item">Mavi</a>
-                                    <a class="dropdown-item">Sarı</a>
-                                    <a class="dropdown-item">Beyaz</a>
-                                    <a class="dropdown-item">Turuncu</a>
-                                    <a class="dropdown-item">Turkuaz</a>
-                                    <a class="dropdown-item">Lila</a>
-                                    <a class="dropdown-item">Pembe</a>
-
-                                </div>
+                            <div>
+                                <label for="capacity">Kapasite:</label>
+                                <input type="number" id="capacity" name="capacity" required>
                             </div>
-                        </div>
-                        <div class="form1">
-                            <form class="form-inline">
-                                <div class="form-group mx-sm-1 mb-2">
-                                    <label for="minFiyat" class="sr-only">Password</label>
-                                    <input type="number" class="form-control" id="minFiyat" placeholder="Min. Fiyat">
-                                </div>
-                            </form>
-                        </div>
-                        <div class="form2">
-                            <form class="form-inline">
-                                <div class="form-group mx-sm-1 mb-2">
-                                    <label for="maxFiyat" class="sr-only">Password</label>
-                                    <input type="number"  class="form-control" id="maxFiyat" placeholder="Max. Fiyat">
-                                </div>
-                            </form>
-                        </div>
-                        <div class="form3">
-                            <form class="form-inline">
-                                <div class="form-group mx-sm-1 mb-2">
-                                    <label for="minFiyat" class="sr-only">Password</label>
-                                    <input type="number" class="form-control" id="minYear" placeholder="Min. Yıl">
-                                </div>
-                            </form>
-                        </div>
-                        <div class="form4">
-                            <form class="form-inline">
-                                <div class="form-group mx-sm-1 mb-2">
-                                    <label for="maxFiyat" class="sr-only">Password</label>
-                                    <input type="number"  class="form-control" id="maxYear" placeholder="Max. Yıl">
-                                </div>
-                            </form>
-                        </div>
+                            <div>
+                                <label for="vehicleType">Araç Türü:</label>
+                                <input type="text" id="vehicleType" name="vehicleType" required>
+                            </div>
+                            <div>
+                                <label for="isActive">Aktif:</label>
+                                <input type="checkbox" id="isActive" name="isActive">
+                            </div>
+                            <div>
+                                <label for="amount">Fiyat:</label>
+                                <input type="number" id="amount" name="amount" required>
+                            </div>
+                            <div>
+                                <label for="imgURL">Resim URL'si:</label>
+                                <input type="text" id="imgURL" name="imgURL" required>
+                            </div>
+                            <button type="submit">Araç İlanı Ver</button>
+                        </form>
                     </div>
+
+                    <script>
+                        document.getElementById("carForm").addEventListener("submit", function(event) {
+                            event.preventDefault(); // Formun otomatik olarak gönderilmesini engelle
+
+                            // Formdaki verileri al
+                            const carData = {
+                                id: 123, // İsteğe bağlı olarak id değeri değiştirilebilir veya sunucudan otomatik atanabilir
+                                carOwner: document.getElementById("carOwner").value,
+                                brand: document.getElementById("brand").value,
+                                model: document.getElementById("model").value,
+                                fuelType: document.getElementById("fuelType").value,
+                                segment: document.getElementById("segment").value,
+                                capacity: parseInt(document.getElementById("capacity").value),
+                                vehicleType: document.getElementById("vehicleType").value,
+                                isActive: document.getElementById("isActive").checked,
+                                amount: parseFloat(document.getElementById("amount").value),
+                                imgURL: document.getElementById("imgURL").value
+                            };
+
+                            postCar(carData);
+                        });
+
+                        function postCar(carData) {
+                            fetch("/car/postCar", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                },
+                                body: JSON.stringify(carData),
+                            })
+                                .then(response => response.json())
+                                .then(data => {
+                                    console.log("Araç ilanı başarıyla verildi:", data);
+                                    // İşlemlerinizi burada gerçekleştirin
+                                })
+                                .catch(error => {
+                                    console.error("Araç ilanı verme hatası:", error);
+                                    // Hata durumunda yapılacak işlemleri buraya ekleyin
+                                });
+                        }
+                        function showAttentionMessage(message) {
+                            const attentionElement = document.createElement("div");
+                            attentionElement.classList.add("attention");
+                            attentionElement.innerText = message;
+                            document.body.appendChild(attentionElement);
+
+                            // 3 saniye sonra attention elementini kaldır
+                            setTimeout(() => {
+                                attentionElement.remove();
+                            }, 3000);
+                        }
+                    </script>
+
+
                 </div>
             </div>
         </div>
     </div>
 </section>
-<!-- Araç Sorgula -->
-<!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <iframe width="100%" height="475" src="https://www.youtube.com/embed/TP4THzsAa3M" frameborder="0" allowfullscreen></iframe>
-        </div>
-    </div>
-</div>
-<!-- end of modal -->
-<!-- Contact Section -->
+
 
 
 <section class="has-bg-img py-0">
