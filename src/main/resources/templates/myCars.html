@@ -27,19 +27,19 @@
         <div class="collapse navbar-collapse"id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link"th:href="@{cars}">Ana Sayfa</a>
+                    <a class="nav-link"th:href="@{loggedInPageCompany}">Ana Sayfa</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link"href="#findCar">Araç Sorgula</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{myCars}">Araçlarım</a>
+                    <a class="nav-link" th:href="@{rentedCar}">Kiralanmış Araçlar</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{advertise}">İlan Ver</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{archive}">Arşiv</a>
+                    <a class="nav-link" th:href="@{archive}">Arşivle</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{myAccount}">Hesabım</a>
@@ -62,21 +62,37 @@
 <!-- End Of Page Header -->
 <!-- Araçlarım -->
 <section id="findCar">
-    <h6 class="section-title mb-5 text-center">Araçlarım</h6>
+        <h6 class="section-title mb-5 text-center">Araçlarım</h6>
     <div class="container" id="carWrapper">
 
         <script>
             listele();
             function sil(evt) {
-                fetch('/car/deleteCar?id=' + evt.currentTarget.param, {
-                    method: 'DELETE'
+                        fetch('/car/deleteCar?id=' + evt.currentTarget.param, {
+                                method: 'DELETE'
+                            })
+                                .then(response => {
+                                    if (response.ok) {
+                                        listele();
+                                        $('.alert').alert();
+                                    } else {
+                                        // Silme başarısız olduğunda yapılacak işlemler
+                                    }
+                                })
+                                .catch(error => {
+                                    // Hata durumunda yapılacak işlemler
+                                });
+            }
+
+            function arsivle(evt) {
+                fetch('/car/passiveCar?id=' + evt.currentTarget.param, {
+                    method: 'GET'
                 })
                     .then(response => {
                         if (response.ok) {
                             listele();
                             $('.alert').alert();
                         } else {
-                            // Silme başarısız olduğunda yapılacak işlemler
                         }
                     })
                     .catch(error => {
@@ -88,7 +104,7 @@
 
                 const  carWrapper = document.getElementById("carWrapper");
                 carWrapper.innerHTML = "";
-                fetch('/car/getCar', {
+                fetch('/car/getCarList', {
                     method: 'GET'
                 })
                     .then(response => response.json())
@@ -223,6 +239,9 @@
                 const  updateBtn = document.createElement("button");
                 updateBtn.classList.add("btn", "btn-success","btn-sm");
                 updateBtn.type="button";
+                updateBtn.addEventListener('click', function() {
+                    window.location.href = '/updateCar?id='+item.id;
+                });
                 updateBtn.innerText="Güncelle";
 
                 carActionButtonItem.appendChild(updateBtn);
@@ -234,13 +253,15 @@
                 deleteBtn.param= item.id;
                 deleteBtn.innerText="Sil";
 
+
                 carActionButtonItem.appendChild(deleteBtn);
 
                 const  archiveBtn = document.createElement("button");
                 archiveBtn.classList.add("btn", "btn-warning","btn-sm");
                 archiveBtn.type="button";
                 archiveBtn.innerText="Arşivle";
-
+                archiveBtn.addEventListener("click", arsivle ,false);
+                archiveBtn.param= item.id;
                 carActionButtonItem.appendChild(archiveBtn);
 
                 carButtonRow.appendChild(carActionButtonItem);
@@ -260,7 +281,7 @@
 
 
 
-    </div>
+        </div>
 
 
 </section>

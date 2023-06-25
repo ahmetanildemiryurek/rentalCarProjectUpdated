@@ -23,40 +23,60 @@ public class CarController {
         this.carService = carService;
     }
 
-    // CRUD İŞLEMLERİ YAPTIĞIMIZ CLASS!!
-
     @Schema(description = "Get Car List")
-    @GetMapping("/getCar")
+    @GetMapping("/getCarList")
     public ResponseEntity<List<CarDto>> getCarList(){
-        List<CarDto> carDTOList = this.carService.getCars();
+        List<CarDto> carDTOList = this.carService.getCarsByActive();
         return  new ResponseEntity<>(carDTOList, HttpStatus.OK);
     }
+
+    @Schema(description = "Get Passive Car List")
+    @GetMapping("/getPassiveCarList")
+    public ResponseEntity<List<CarDto>> getPassiveCarList(){
+        List<CarDto> carDTOList = this.carService.getCarsByPassive();
+        return  new ResponseEntity<>(carDTOList, HttpStatus.OK);
+    }
+
+    @Schema(description = "Get Car")
+    @GetMapping("/getCar")
+    public ResponseEntity<CarDto> getCar(Long id){
+        CarDto carDTO = this.carService.getCarDto(id);
+        return  new ResponseEntity<>(carDTO, HttpStatus.OK);
+    }
+
+
     @Schema(description = "Insert Car")
     @PostMapping("/postCar")
     public ResponseEntity<CarDto>insertCar(@RequestBody CarDto carDto){
         carDto = this.carService.insertCar(carDto);
         return new ResponseEntity<>(carDto,HttpStatus.OK);
     }
-
-
-
-
-
-
-
-
     @Schema(description = "Delete Car")
     @DeleteMapping("/deleteCar")
     public void removeCar(Long id){
         this.carService.removeCar(id);
     }
+    @Schema(description = "Get Car List")
+    @GetMapping("/getCarByBrand")
+    public ResponseEntity<List<CarDto>> getCarList(@RequestParam("brand") String brand){
+        List<CarDto> carDTOList = this.carService.getCarsByBrand(brand); // CarService'de markaya göre filtreleme yapılıyor
+        return  new ResponseEntity<>(carDTOList, HttpStatus.OK);
+    }
 
     @Schema(description = "Update Car")
-    @PutMapping("/updateCar")
+    @PutMapping("/putCar")
     public ResponseEntity<CarDto>updateCar(@RequestBody CarDto carDto){
         carDto = this.carService.updateCar(carDto);
         return new ResponseEntity<>(carDto,HttpStatus.OK);
     }
 
 
+    @Schema(description = "Passive Car")
+    @GetMapping("/passiveCar")
+    public ResponseEntity<CarDto>passiveCar( Long id){
+        this.carService.passiveCar(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }
+

@@ -88,7 +88,7 @@
 
         const  carWrapper = document.getElementById("carWrapper");
         carWrapper.innerHTML = "";
-        fetch('/car/getCar', {
+        fetch('/car/getCarList', {
           method: 'GET'
         })
                 .then(response => response.json())

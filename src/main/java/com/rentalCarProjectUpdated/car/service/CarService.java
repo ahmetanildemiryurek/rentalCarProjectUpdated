@@ -9,6 +9,11 @@ public interface CarService {
 
     List<CarDto> getCars();
 
+    List<CarDto> getCarsByPassive();
+    List<CarDto> getCarsByActive();
+
+    List<CarDto>  getCarsByBrand(String brand);
+
     CarDto updateCar(CarDto carDTO);
 
     CarDto insertCar(CarDto carDTO);
@@ -18,4 +23,7 @@ public interface CarService {
     Car getCar(Long id);
 
     void removeCar(Long id);
+
+    void passiveCar(Long id);
 }
+    

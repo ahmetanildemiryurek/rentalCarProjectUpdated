@@ -11,6 +11,8 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Entity
+@NamedQuery(name="Car.Active",query = "Select car from Car car where car.isActive = true")
+@NamedQuery(name="Car.Passive",query = "Select car from Car car where car.isActive = false")
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -43,7 +45,7 @@ public class Car {
     @Column(name = "AMOUNT" , nullable = false )
     private BigDecimal amount;
 
-    @Column(name = "IMGURL" , nullable = false , length = 255)
+    @Column(name = "IMGURL" , nullable = false , length = 1000)
     private String imgURL;
 
 }
