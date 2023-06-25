@@ -1,7 +1,7 @@
 package com.rentalCarProjectUpdated.reservation.domain;
 
 import com.rentalCarProjectUpdated.car.domain.Car;
-import com.rentalCarProjectUpdated.customer.domain.Customer;
+import com.rentalCarProjectUpdated.clientRegister.domain.ClientRegister;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -27,12 +27,15 @@ public class Reservation {
     @JoinColumn(name = "CAR_ID", nullable = false)
     private Car car;
 
-    @OneToOne(optional = false )
-    @JoinColumn(name = "CUSTOMER_ID", nullable = false)
-    private Customer customer;
+    @ManyToOne(optional = false )
+    @JoinColumn(name = "CLIENT_REGISTER_ID", nullable = true)
+    private ClientRegister client;
 
-    @Column( name = "RESERVATION_DATE" , nullable = false  )
-    private LocalDateTime reservationDate;
+    @Column( name = "RESERVATION_START_DATE" , nullable = true  )
+    private LocalDate reservationStartDate;
+
+    @Column( name = "RESERVATION_FINISH_DATE" , nullable = true  )
+    private LocalDate reservationFinishDate;
 
     @Column(name = "TOTALAMOUNT" , nullable = false)
     private BigDecimal totalAmount;

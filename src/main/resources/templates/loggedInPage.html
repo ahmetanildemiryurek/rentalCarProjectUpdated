@@ -35,6 +35,9 @@
           <a class="nav-link" href="#team">Ekibimiz</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link" th:href="@{rentedCar}">Kiralanmış Araçlar</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" th:href="@{queryCar}">Araç Sorgula</a>
         </li>
         <li class="nav-item">
@@ -79,6 +82,146 @@
   </div>
 </div>
 <!-- End of Box -->
+<section id="findCar">
+  <h6 class="section-title mb-5 text-center">Mevcut Araçlar</h6>
+  <div class="container" id="carWrapper">
+    <script>
+      function kirala(carId) {
+        fetch("rent/postRent", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            carId: carId
+          })
+        })
+                .then(response => {
+                  if (response.ok) {
+                    // Kiralama başarılı olduğunda yapılacak işlemler
+                    alert("Araç başarıyla kiralandı.");
+                    listele();
+                  } else {
+                    // Kiralama başarısız olduğunda yapılacak işlemler
+                    alert("Araç kiralanamadı.");
+                  }
+                })
+                .catch(error => {
+                  // Hata durumunda yapılacak işlemler
+                  console.error("Hata:", error);
+                });
+      }
+
+      function listele() {
+        const carWrapper = document.getElementById("carWrapper");
+        carWrapper.innerHTML = "";
+
+        fetch('/car/getCarList', {
+          method: 'GET'
+        })
+                .then(response => response.json())
+                .then(data => {
+                  if (data.length > 0) {
+                    data.forEach(addCarItem);
+                  }
+                })
+                .catch(error => {
+                  // Hata durumunda yapılacak işlemler
+                  console.error("Hata:", error);
+                });
+      }
+
+      function addCarItem(item) {
+        const carWrapper = document.getElementById("carWrapper");
+
+        const carBox = document.createElement("div");
+        carBox.classList.add("row", "car__list-item");
+
+        const carBoxSm = document.createElement("div");
+        carBoxSm.classList.add("col-sm-8", "col-md-12", "car__list-item-inner");
+
+        const carImgBox = document.createElement("div");
+        carImgBox.classList.add("image_wrap");
+
+        const aracImg = document.createElement("img");
+        aracImg.alt = "Arac";
+        aracImg.src = item.imgURL;
+
+        carImgBox.appendChild(aracImg);
+        carBoxSm.appendChild(carImgBox);
+
+        const carDetail = document.createElement("div");
+        carDetail.classList.add("text_wrap");
+
+        const carTitle = document.createElement("h5");
+        carTitle.classList.add("title");
+        carTitle.innerText = item.carOwner + " " + item.brand + " " + item.model;
+        carDetail.appendChild(carTitle);
+
+        const carSubTitle = document.createElement("h6");
+        carSubTitle.classList.add("text");
+        carSubTitle.innerText = "Ekonomik";
+        carDetail.appendChild(carSubTitle);
+
+        const carProperties = document.createElement("div");
+        carProperties.classList.add("properties");
+
+        const carPropertiesItemGear = document.createElement("div");
+        carPropertiesItemGear.classList.add("properties_item");
+
+        const carPropertiesItemGearIcon = document.createElement("i");
+        carPropertiesItemGearIcon.classList.add("fa", "fa-gear");
+        carPropertiesItemGear.appendChild(carPropertiesItemGearIcon);
+
+        const carPropertiesItemGearSpan = document.createElement("span");
+        carPropertiesItemGearSpan.innerText = item.fuelType;
+        carPropertiesItemGear.appendChild(carPropertiesItemGearSpan);
+
+        carProperties.appendChild(carPropertiesItemGear);
+
+        const carPropertiesItemCapacity = document.createElement("div");
+        carPropertiesItemCapacity.classList.add("properties_item");
+
+        const carPropertiesItemCapacityIcon = document.createElement("i");
+        carPropertiesItemCapacityIcon.classList.add("fa", "fa-capacity");
+        carPropertiesItemCapacity.appendChild(carPropertiesItemCapacityIcon);
+
+        const carPropertiesItemCapacitySpan = document.createElement("span");
+        carPropertiesItemCapacitySpan.innerText = item.capacity + " Kişi";
+        carPropertiesItemCapacity.appendChild(carPropertiesItemCapacitySpan);
+
+        carProperties.appendChild(carPropertiesItemCapacity);
+        carDetail.appendChild(carProperties);
+
+        const carActions = document.createElement("div");
+        carActions.classList.add("actions");
+
+        const carActionsButton = document.createElement("button");
+        carActionsButton.classList.add("btn", "btn-success");
+        carActionsButton.innerText = "Kirala";
+
+        carActionsButton.addEventListener('click', function() {
+          window.location.href = '/rentCar?id='+item.id;
+        })
+
+        carActions.appendChild(carActionsButton);
+        carDetail.appendChild(carActions);
+
+        carBoxSm.appendChild(carDetail);
+        carBox.appendChild(carBoxSm);
+
+        carWrapper.appendChild(carBox);
+      }
+
+      listele();
+    </script>
+
+
+
+  </div>
+
+
+</section>
 <!-- About Section -->
 <section id="about">
   <div class="container">

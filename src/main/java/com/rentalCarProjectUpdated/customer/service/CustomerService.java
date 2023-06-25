@@ -9,9 +9,9 @@ public interface CustomerService {
 
     List<CustomerDto> getCustomers();
 
-    CustomerDto updateCustomer(CustomerDto customerDto);
+    CustomerDto updateCustomer(CustomerDto carDTO);
 
-    Customer insertCustomer(CustomerDto customerDto);
+    Customer insertCustomer(CustomerDto carDTO);
 
     CustomerDto getCustomer(Long id);
 

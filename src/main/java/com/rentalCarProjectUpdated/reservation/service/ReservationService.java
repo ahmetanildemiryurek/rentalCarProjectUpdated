@@ -6,7 +6,7 @@ import com.rentalCarProjectUpdated.reservation.service.dto.ReservationInputDto;
 import java.util.List;
 
 public interface ReservationService {
-    List<ReservationDto> getReservations();
+    List<ReservationDto> getReservations(String clientName);
 
     ReservationDto updateReservation(ReservationInputDto reservationDto);
 

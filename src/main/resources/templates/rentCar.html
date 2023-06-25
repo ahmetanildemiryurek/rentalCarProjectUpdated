@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Start your development with Creative Studio landing page.">
+  <meta name="author" content="Devcrud">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+
+  <!-- Bootstrap JS -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+  <title>Araç Kirala</title>
+
+  <!-- Bootstrap + Creative Studio main styles -->
+  <link rel="stylesheet" th:href="@{css/creative-studio.css}">
+  <script>
+    $(function() {
+
+
+
+      fetch('/car/getCar?id=' + urlParam('id')  , {
+        method: 'GET'
+      })
+              .then(response => response.json())
+              .then(data => {
+                document.getElementById("brand").value = data.brand;
+                document.getElementById("model").value = data.model;
+                document.getElementById("amount").value = data.amount;
+                document.getElementById("image").value = data.imgURL;
+                document.getElementById("fuelType").value = data.fuelType;
+                document.getElementById("capacity").value = data.capacity;
+              })
+              .catch(error => {
+                // Hata durumunda yapılacak işlemler
+              });
+
+
+      function urlParam (name){
+        var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+        if (results==null) {
+          return null;
+        }
+        return decodeURI(results[1]) || 0;
+      }
+      function getCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0;i < ca.length;i++) {
+          var c = ca[i];
+          while (c.charAt(0)==' ') c = c.substring(1,c.length);
+          if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        }
+        return null;
+      }
+      function  rentCar(){
+
+
+        const  contentBody = JSON.stringify({carId : Number(urlParam('id')) ,  customer : getCookie('userName'), startDate : document.getElementById("datepickerStart").value,
+          finishDate: document.getElementById("datepickerFinish").value });
+
+        const requestOptions = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: contentBody
+        };
+        fetch('/reservation/post', requestOptions)
+                .then(response => response.json());
+
+
+
+      }
+      document.getElementById("rentCarBtn").onclick = function() {
+        rentCar();
+        window.location.href = 'rentedCar';
+
+      };
+    });
+  </script>
+</head>
+<body data-spy="scroll" data-target=".navbar" data-offset="40" id="home">
+
+<!-- Page Navigation -->
+<nav class="navbar custom-navbar navbar-expand-lg navbar-dark" data-spy="affix" data-offset-top="20">
+  <div class="container">
+    <a class="navbar-brand" th:href="@{index}">
+      <img src="../imgs/logo.png" alt="Demirilik Rental Car">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{loggedInPage}">Ana Sayfa</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{myCars}">Araçlarım</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{advertise}">İlan Ver</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{queryCar}">Araç Sorgula</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{myAccount}">Hesabım</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{index}">Çıkış Yap</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- End Of Page Navigation -->
+
+<!-- Page Header -->
+<header class="header">
+  <div class="overlay">
+    <h1 class="title">DEMİRİLİK RENTAL CAR</h1>
+  </div>
+</header>
+<!-- End Of Page Header -->
+<!-- Araç Sorgula -->
+<section id="findCar">
+  <div class="container">
+    <h6 class="section-title mb-5 text-left">Araç Kirala</h6>
+    <form>
+<div class="row">
+  <div class="col-md-6">
+    <div class="form-group">
+      <label for="brand">Marka</label>
+      <input type="text" class="form-control" id="brand" readonly name="brand" placeholder="Aracın markasını girin">
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="form-group">
+      <label for="model">Model</label>
+      <input type="text" class="form-control" id="model" readonly name="model" placeholder="Aracın modelini girin">
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <div class="form-group">
+      <label for="capacity">Kapasite</label>
+      <input type="number" class="form-control" id="capacity" readonly name="capacity"  placeholder="Aracın kapasitesini girin">
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="form-group">
+      <label for="amount">Fiyat</label>
+      <input type="number" class="form-control" id="amount" name="amount" readonly placeholder="Aracın günlük fiyatını girin">
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="form-group">
+      <label for="fuelType">Yakıt</label>
+      <input type="text" readonly class="form-control" id="fuelType" name="fuelType"   placeholder="Aracın yakıtını girin"></input>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6">
+    <div class="form-group">
+      <label for="datepickerStart">"Başlangıç Tarihi</label>
+      <input  type="text"  class="form-control"  id="datepickerStart"  placeholder="Başlangıç Tarihi">
+    </div>
+  </div>
+
+  <div class="col-sm-6">
+    <div class="form-group">
+      <label for="datepickerFinish">Bitiş Tarihi</label>
+      <input  type="text"  class="form-control" id="datepickerFinish" placeholder="Bitiş Tarihi">
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <a class="btn btn-primary" id="rentCarBtn">Kirala</a>
+  </div>
+</div>
+</form>
+</div>
+
+</div>
+</section>
+<!-- End Of Araç Sorgula -->
+<!-- Footer -->
+<footer id="footer">
+  <div class="container text-center">
+    <p>&copy; 2023 Demirilik Rental Car. All rights reserved.</p>
+  </div>
+</footer>
+<!-- End Of Footer -->
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<!-- Initialize Bootstrap functionality -->
+<script>
+  $(function() {
+
+    $('[data-toggle="tooltip"]').tooltip();
+
+
+  });
+</script>
+</body>
+</html>

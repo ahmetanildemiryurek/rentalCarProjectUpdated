@@ -26,8 +26,8 @@ public class ReservationController {
 
     @Schema(description = "Get Reservation List")
     @GetMapping("/get")
-    public ResponseEntity<List<ReservationDto>> getReservationList(){
-        List<ReservationDto> ReservationDtoList = this.reservationService.getReservations();
+    public ResponseEntity<List<ReservationDto>> getReservationList(String clientName){
+        List<ReservationDto> ReservationDtoList = this.reservationService.getReservations(clientName);
         return  new ResponseEntity<>(ReservationDtoList, HttpStatus.OK);
     }
 

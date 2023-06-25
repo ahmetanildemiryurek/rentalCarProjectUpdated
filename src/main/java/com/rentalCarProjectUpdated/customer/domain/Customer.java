@@ -17,20 +17,20 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "NAME" , nullable = false , length = 50)
+    @Column(name = "NAME" , nullable = true , length = 50)
     private String name;
 
-    @Column(name = "IDENTITYNUMBER" , nullable = false )
+    @Column(name = "IDENTITYNUMBER" , nullable = true )
     private int identityNumber;
 
-    @Column(name = "PHONENUMBER" , nullable = false )
+    @Column(name = "PHONENUMBER" , nullable = true )
     private int phoneNumber;
 
-    @Column(name = "ADDRESS" , nullable = false , length = 255)
+    @Column(name = "ADDRESS" , nullable = true , length = 255)
     private String address;
 
 
-    @Column(name = "EMAIL" , nullable = false , length = 50)
+    @Column(name = "EMAIL" , nullable = true , length = 50)
     private String email;
 
 }

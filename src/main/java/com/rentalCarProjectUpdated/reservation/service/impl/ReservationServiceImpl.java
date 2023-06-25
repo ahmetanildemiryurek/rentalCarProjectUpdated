@@ -2,7 +2,8 @@ package com.rentalCarProjectUpdated.reservation.service.impl;
 
 import com.rentalCarProjectUpdated.car.domain.Car;
 import com.rentalCarProjectUpdated.car.service.CarService;
-import com.rentalCarProjectUpdated.customer.domain.Customer;
+import com.rentalCarProjectUpdated.clientRegister.domain.ClientRegister;
+import com.rentalCarProjectUpdated.clientRegister.repository.ClientRegisterRepository;
 import com.rentalCarProjectUpdated.customer.service.CustomerService;
 import com.rentalCarProjectUpdated.reservation.domain.Reservation;
 import com.rentalCarProjectUpdated.reservation.mapper.ReservationMapper;
@@ -13,6 +14,9 @@ import com.rentalCarProjectUpdated.reservation.service.dto.ReservationInputDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,18 +30,24 @@ public class ReservationServiceImpl implements ReservationService {
     private CarService carService;
     private ReservationMapper reservationMapper;
 
+    private ClientRegisterRepository clientRepository;
+
+
     @Autowired
     public  ReservationServiceImpl(ReservationRepository reservationRepository
-            , ReservationMapper reservationMapper, CustomerService customerService,CarService carService){
+            , ReservationMapper reservationMapper, CustomerService customerService, CarService carService, ClientRegisterRepository  clientRepository){
         this.reservationRepository = reservationRepository;
         this.reservationMapper = reservationMapper;
         this.customerService = customerService;
         this.carService = carService;
+        this.clientRepository =clientRepository ;
     }
 
     @Override
-    public List<ReservationDto> getReservations() {
-        List<Reservation> reservationList = this.reservationRepository.findAll();
+    public List<ReservationDto> getReservations(String clientName) {
+
+        ClientRegister client = clientRepository.findByUsername(clientName);
+        List<Reservation> reservationList = this.reservationRepository.getReservationByClient(client);
         return this.reservationMapper.toReservationDTO(reservationList);
     }
 
@@ -49,12 +59,23 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public ReservationDto insertReservation(ReservationInputDto reservationDto) {
-        Reservation reservation = this.reservationMapper.toReservationInput(reservationDto);
+
+        ClientRegister client = clientRepository.findByUsername(reservationDto.getCustomer());
+        Reservation reservation =  new Reservation();
+        reservation.setClient(client);
         Car car = this.carService.getCar(reservationDto.getCarId());
         reservation.setCar(car);
-        Customer customer = this.customerService.insertCustomer(reservationDto.getCustomer());
-        reservation.setCustomer(customer);
+        LocalDate starDate = LocalDate.parse(reservationDto.getStartDate());
 
+        LocalDate finishDate = LocalDate.parse(reservationDto.getFinishDate());
+
+        reservation.setReservationStartDate(starDate);
+        reservation.setReservationFinishDate(finishDate);
+        long difDay = ChronoUnit.DAYS.between(starDate,finishDate);
+
+        BigDecimal totalAmount = car.getAmount().multiply(new BigDecimal(difDay));
+
+        reservation.setTotalAmount(totalAmount);
         return this.reservationMapper.toReservationDTO(this.reservationRepository.save(reservation));
     }
 

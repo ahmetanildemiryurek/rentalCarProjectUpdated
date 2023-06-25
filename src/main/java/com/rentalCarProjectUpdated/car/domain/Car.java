@@ -2,6 +2,7 @@ package com.rentalCarProjectUpdated.car.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+
 import java.math.BigDecimal;
 
 @Data
