@@ -19,8 +19,8 @@ public class CarServiceImpl implements CarService {
     private final CarMapper carMapper;
 
     @Autowired
-    public  CarServiceImpl(CarRepository carRepository
-            ,CarMapper carMapper){
+    public CarServiceImpl(CarRepository carRepository
+            , CarMapper carMapper){
         this.carRepository = carRepository;
         this.carMapper = carMapper;
     }
@@ -87,7 +87,22 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
+    public void removePassiveCar(Long id){
+        this.carRepository.deleteById(id);
+    }
+
+    @Override
     public void passiveCar(Long id) {
+
+        Optional<Car> carOp = this.carRepository.findById(id);
+        Car  car =  carOp.get();
+        car.setIsActive(false);
+        this.carRepository.save(car);
+
+    }
+
+    @Override
+    public void activeCar(Long id) {
 
         Optional<Car> carOp = this.carRepository.findById(id);
         Car  car =  carOp.get();

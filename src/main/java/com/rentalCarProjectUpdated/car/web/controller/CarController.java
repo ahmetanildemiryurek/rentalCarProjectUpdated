@@ -56,6 +56,11 @@ public class CarController {
     public void removeCar(Long id){
         this.carService.removeCar(id);
     }
+    @Schema(description = "Delete Passive Car")
+    @DeleteMapping("/deletePassiveCar")
+    public void removePassiveCar(Long id){
+        this.carService.removePassiveCar(id);
+    }
     @Schema(description = "Get Car List")
     @GetMapping("/getCarByBrand")
     public ResponseEntity<List<CarDto>> getCarList(@RequestParam("brand") String brand){
@@ -74,6 +79,13 @@ public class CarController {
     @Schema(description = "Passive Car")
     @GetMapping("/passiveCar")
     public ResponseEntity<CarDto>passiveCar( Long id){
+        this.carService.passiveCar(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Schema(description = "Active Car")
+    @GetMapping("/activeCar")
+    public ResponseEntity<CarDto>activeCar( Long id){
         this.carService.passiveCar(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

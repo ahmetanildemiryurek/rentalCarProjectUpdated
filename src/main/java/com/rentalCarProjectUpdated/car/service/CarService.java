@@ -24,6 +24,9 @@ public interface CarService {
 
     void removeCar(Long id);
 
+    void removePassiveCar(Long id);
     void passiveCar(Long id);
+
+    void activeCar(Long id);
 }
     
