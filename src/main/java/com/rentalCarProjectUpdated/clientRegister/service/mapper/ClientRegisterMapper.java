@@ -1,9 +1,6 @@
 package com.rentalCarProjectUpdated.clientRegister.service.mapper;
 
 
-import com.rentalCarProjectUpdated.client.service.mapper.ClientMapper;
-import com.rentalCarProjectUpdated.clientRegister.domain.ClientRegister;
-import com.rentalCarProjectUpdated.clientRegister.service.dto.ClientRegisterDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Component;
