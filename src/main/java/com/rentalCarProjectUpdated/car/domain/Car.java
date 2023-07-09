@@ -28,7 +28,7 @@ public class Car {
     @Column(name = "MODEL" , nullable = false , length = 60)
     private String model;
 
-    @Column(name = "FUELTYPE" , nullable = false , length = 12)
+    @Column(name = "FUELTYPE" , nullable = false , length = 50)
     private String fuelType;
 
     @Column(name = "SEGMENT" , nullable = false , length = 10)
@@ -37,7 +37,7 @@ public class Car {
     @Column(name = "CAPACITY" , nullable = false )
     private int capacity;
 
-    @Column(name = "VEHICLETYPE" , nullable = false , length = 50)
+    @Column(name = "VEHICLETYPE" , nullable = false , length = 100)
     private String vehicleType;
 
     @Column(name = "ISACTIVE" , nullable = false )
@@ -46,7 +46,7 @@ public class Car {
     @Column(name = "AMOUNT" , nullable = false )
     private BigDecimal amount;
 
-    @Column(name = "IMGURL" , nullable = false , length = 1000)
+    @Column(name = "IMGURL" , nullable = false , length = 2000)
     private String imgURL;
 
 }

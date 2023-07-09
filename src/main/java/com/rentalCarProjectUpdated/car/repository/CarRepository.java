@@ -14,4 +14,8 @@ public interface CarRepository extends JpaRepository<Car, Long >, JpaSpecificati
 
     @Query(nativeQuery = false,name = "Car.Passive")
     public List<Car> getCarsByPassive();
+
+    @Query(nativeQuery = false,name = "Car.Active")
+    public List<Car> getCarsListByActive();
+
 }

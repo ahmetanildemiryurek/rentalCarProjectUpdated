@@ -1,7 +1,9 @@
 package com.rentalCarProjectUpdated.car.service.dto;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 
 import java.io.Serializable;
@@ -13,6 +15,8 @@ import java.math.BigDecimal;
 public class CarDto implements Serializable {
     private Long id;
     private String carOwner;
+    @NotNull
+    @NonNull
     private String brand;
     private String model;
     private String fuelType;

@@ -8,25 +8,18 @@ import java.util.List;
 public interface CarService {
 
     List<CarDto> getCars();
-
     List<CarDto> getCarsByPassive();
     List<CarDto> getCarsByActive();
-
+    List <CarDto> getActiveCarList();
     List<CarDto>  getCarsByBrand(String brand);
-
     CarDto updateCar(CarDto carDTO);
-
     CarDto insertCar(CarDto carDTO);
-
     CarDto getCarDto(Long id);
-
     Car getCar(Long id);
-
+    Car getPassiveCar(Long id);
     void removeCar(Long id);
-
     void removePassiveCar(Long id);
     void passiveCar(Long id);
-
     void activeCar(Long id);
 }
     

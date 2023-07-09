@@ -88,12 +88,12 @@
   <div class="container">
     <h6 class="section-title mb-5 text-left">Hesabımı Sil</h6>
     <script>
-      function removeAccount() {
+      function removeAccount2() {
         var enteredUsername = document.getElementById("username").value;
         var enteredPassword = document.getElementById("password").value;
 
         // Kullanıcı adı ve şifre kontrolü
-        fetch('/register/deleteClientRegister?username=' + enteredUsername + '&password=' + enteredPassword, {
+        fetch('/register2/deleteCompanyRegister?username=' + enteredUsername + '&password=' + enteredPassword, {
           method: 'DELETE'
         })
                 .then(response => {
@@ -118,7 +118,7 @@
       <br><br><br>
       <input type="text" id="password" name="password" placeholder="Şifre">
       <br><br><br>
-      <input type="button" onclick="removeAccount()" class="btn" value="Hesabı Sil">
+      <input type="button" onclick="removeAccount2()" class="btn" value="Hesabı Sil">
     </form>
   </div>
 

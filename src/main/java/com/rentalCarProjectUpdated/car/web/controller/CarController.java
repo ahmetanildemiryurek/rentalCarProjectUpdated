@@ -44,6 +44,13 @@ public class CarController {
         return  new ResponseEntity<>(carDTO, HttpStatus.OK);
     }
 
+    @Schema(description = "Get Car")
+    @GetMapping("/getPassiveCar")
+    public ResponseEntity<CarDto> getPassiveCar(Long id){
+        CarDto carDTO = this.carService.getCarDto(id);
+        return  new ResponseEntity<>(carDTO, HttpStatus.OK);
+    }
+
 
     @Schema(description = "Insert Car")
     @PostMapping("/postCar")
@@ -86,8 +93,15 @@ public class CarController {
     @Schema(description = "Active Car")
     @GetMapping("/activeCar")
     public ResponseEntity<CarDto>activeCar( Long id){
-        this.carService.passiveCar(id);
+        this.carService.activeCar(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Schema(description = "Get Active Car List")
+    @GetMapping("/getActiveCarList")
+    public ResponseEntity<List<CarDto>> getActiveCarList(){
+        List<CarDto> carDTOList = this.carService.getCarsByPassive();
+        return  new ResponseEntity<>(carDTOList, HttpStatus.OK);
     }
 
 }

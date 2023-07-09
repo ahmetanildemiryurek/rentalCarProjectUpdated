@@ -1,40 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Start your development with Creative Studio landing page.">
   <meta name="author" content="Devcrud">
-  <title>Hesabımı Sil</title>
+  <title>Hesabım</title>
+
+  <!-- font icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
   <!-- Bootstrap + Creative Studio main styles -->
   <link rel="stylesheet" th:href="@{/css/creative-studio.css}">
-  <style>
-    /* Özel CSS */
-    .form-group {
-      margin-bottom: 20px;
-    }
 
-    .form-group input[type="text"],
-    .form-group input[type="password"] {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      font-size: 16px;
-    }
-
-    .btn {
-      align-items: center;
-      background-color: #dc3545;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      font-size: 16px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-  </style>
 </head>
 <body data-spy="scroll" data-target=".navbar" data-offset="40" id="home">
 
@@ -42,7 +20,7 @@
 <nav class="navbar custom-navbar navbar-expand-lg navbar-dark" data-spy="affix" data-offset-top="20">
   <div class="container">
     <a class="navbar-brand" href="index.html">
-      <img src="../imgs/logo.png" alt="Demirilik Rental Car">
+      <img src="imgs/logo.png" alt="Demirilik Rental Car">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span></span>
@@ -84,45 +62,45 @@
   </div>
 </header>
 <!-- End Of Page Header -->
-<section id="changeMyPassword" >
+<section id="myAccount" >
   <div class="container">
-    <h6 class="section-title mb-5 text-left">Hesabımı Sil</h6>
-    <script>
-      function removeAccount() {
-        var enteredUsername = document.getElementById("username").value;
-        var enteredPassword = document.getElementById("password").value;
+    <h6 class="section-title mb-5 text-left">Hesabım</h6>
+    <div class="row">
+      <div class="col-sm-1 col-md-4">
 
-        // Kullanıcı adı ve şifre kontrolü
-        fetch('/register/deleteClientRegister?username=' + enteredUsername + '&password=' + enteredPassword, {
-          method: 'DELETE'
-        })
-                .then(response => {
-                  if (response.ok) {
-                    // Silme işlemi başarılı olduğunda yapılacak işlemler
-                    alert("Kullanıcı hesabı başarıyla silindi.");
-                    window.location.href = "index";
-                  } else {
-                    // Silme işlemi başarısız olduğunda yapılacak işlemler
-                    alert("Kullanıcı adı veya şifre hatalı! Tekrar Deneyiniz!");
-                  }
-                })
-                .catch(error => {
-                  console.error("Hata oluştu:", error);
-                  alert("Bir hata oluştu. Lütfen tekrar deneyiniz!");
-                });
-      }
-    </script>
-    <form method="POST" action="/removeAccount">
-      <!-- Kullanıcı adı ve şifre alanları -->
-      <input type="text" id="username" name="username" placeholder="Kullanıcı Adı">
-      <br><br><br>
-      <input type="text" id="password" name="password" placeholder="Şifre">
-      <br><br><br>
-      <input type="button" onclick="removeAccount()" class="btn" value="Hesabı Sil">
-    </form>
+        <div class="myAccount-body">
+
+          <div class="companyArea">
+            <label>Şirket Adı</label>
+            <div class="form-group">
+              <input type="text" id="companyText">
+            </div><br>
+          </div>
+
+          <div class="surnameArea">
+            <label>Soyad</label>
+            <div class="form-group">
+              <input type="text" id="surNameText">
+            </div><br>
+
+          </div>
+          <div class="updateButton">
+            <button type="button" class="btn btn-info" >Güncelle</button>
+          </div>
+          <div class="changePasswordButton">
+            <a href="changeMyPassword">
+              <button type="button" class="btn btn-success">Şifremi Değiştir</button>
+            </a>
+          </div>
+          <div class="deleteAccountButton">
+            <a th:href="@{deleteMyAccount}"
+            <button type="button" class="btn btn-primary" >Hesabımı Sil</button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-
-
 </section>
 <!-- Araç Sorgula -->
 <!-- Modal -->
@@ -143,11 +121,11 @@
       <div class="footer-lists">
         <ul class="list">
           <li class="list-head">
-            <h6 class="font-weight-bold">Hakkımızda</h6>
+            <h6 class="font-weight-bold">HAKKIMIZDA</h6>
           </li>
           <li class="list-body">
-            <a href="#" class="logo">
-              <img src="assets/imgs/logo.png" alt="Demirilik Rental Car Logo">
+            <a href="index.html" class="logo">
+              <img src="/imgs/logo.png" alt="Demirilik Rental Car Logo">
               <h6>Demirilik Rental Car</h6>
             </a>
             <p>2022 Yılı itibariyle ilimiz Elazığ'da faaliyet göstermeye başlamış bulunmaktayız.</p>
@@ -158,29 +136,30 @@
         </ul>
         <ul class="list">
           <li class="list-head">
-            <h6 class="font-weight-bold">Faydalı Linkler</h6>
+            <h6 class="font-weight-bold">USEFUL LINKS</h6>
           </li>
           <li class="list-body">
             <div class="row">
               <div class="col">
-                <a href="#about">Hakkımızda</a>
+                <a href="#about">About</a>
+                <a href="#service">Service</a>
               </div>
               <div class="col">
-                <a href="#team">Ekibimiz</a>
-                <a href="#">SSS</a>
-                <a href="#">Gizlilik Politikası</a>
+                <a href="#team">Team</a>
+                <a href="#">Faq</a>
+                <a href="#">Privacy Policy</a>
               </div>
             </div>
           </li>
         </ul>
         <ul class="list">
           <li class="list-head">
-            <h6 class="font-weight-bold">İletişim Bilgileri</h6>
+            <h6 class="font-weight-bold">CONTACT INFO</h6>
           </li>
           <li class="list-body">
-            <p>Bize Ulaşın 24 Saat İçinde Size Dönelim ! </p>
-            <p><i class="ti-location-pin"></i> Elazığ / Merkez</p>
-            <p><i class="ti-email"></i> www.demirilik.com</p>
+            <p>Contact us and we'll get back to you within 24 hours.</p>
+            <p><i class="ti-location-pin"></i> 12345 Fake ST NoWhere AB Country</p>
+            <p><i class="ti-email"></i>  info@website.com</p>
             <div class="social-links">
               <a href="javascript:void(0)" class="link"><i class="ti-facebook"></i></a>
               <a href="javascript:void(0)" class="link"><i class="ti-twitter-alt"></i></a>

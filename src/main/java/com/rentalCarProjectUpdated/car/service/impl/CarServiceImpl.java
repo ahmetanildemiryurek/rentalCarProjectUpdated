@@ -1,6 +1,5 @@
 package com.rentalCarProjectUpdated.car.service.impl;
 
-
 import com.rentalCarProjectUpdated.car.domain.Car;
 import com.rentalCarProjectUpdated.car.repository.CarRepository;
 import com.rentalCarProjectUpdated.car.service.CarService;
@@ -19,8 +18,8 @@ public class CarServiceImpl implements CarService {
     private final CarMapper carMapper;
 
     @Autowired
-    public CarServiceImpl(CarRepository carRepository
-            , CarMapper carMapper){
+    public  CarServiceImpl(CarRepository carRepository
+            ,CarMapper carMapper){
         this.carRepository = carRepository;
         this.carMapper = carMapper;
     }
@@ -34,6 +33,11 @@ public class CarServiceImpl implements CarService {
     @Override
     public List<CarDto> getCarsByPassive() {
         List<Car> carList = this.carRepository.getCarsByPassive();
+        return this.carMapper.toCarDTO(carList);
+    }
+    @Override
+    public List<CarDto> getActiveCarList() {
+        List<Car> carList = this.carRepository.getCarsListByActive();
         return this.carMapper.toCarDTO(carList);
     }
 
@@ -51,7 +55,6 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public CarDto updateCar(CarDto carDTO) {
-
         Optional<Car> carOp = this.carRepository.findById(carDTO.getId());
         Car  car =  carOp.get();
         car.setAmount(carDTO.getAmount());
@@ -80,6 +83,11 @@ public class CarServiceImpl implements CarService {
         Optional<Car> car = this.carRepository.findById(id);
         return car.get();
     }
+    @Override
+    public Car getPassiveCar(Long id) {
+        Optional<Car> car = this.carRepository.findById(id);
+        return car.get();
+    }
 
     @Override
     public void removeCar(Long id){
@@ -88,26 +96,23 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public void removePassiveCar(Long id){
+
         this.carRepository.deleteById(id);
     }
 
     @Override
     public void passiveCar(Long id) {
-
         Optional<Car> carOp = this.carRepository.findById(id);
         Car  car =  carOp.get();
         car.setIsActive(false);
         this.carRepository.save(car);
-
     }
 
     @Override
     public void activeCar(Long id) {
-
         Optional<Car> carOp = this.carRepository.findById(id);
         Car  car =  carOp.get();
-        car.setIsActive(false);
+        car.setIsActive(true);
         this.carRepository.save(car);
-
     }
 }
